@@ -58,6 +58,8 @@ function wait(time) {
         }, time)
     })
 }
+
+wait(1000).then(console.log);
 ```
 
 6. Do the following:
@@ -73,14 +75,19 @@ function wait(time) {
 let promise = new Promise((res, rej) => {
     res(21);
 })
-.then(num => {
+.then((num) => {
+    console.log(num);
     return num + 10;
 })
-.then(num => {
+.then((num) => {
+    console.log(num);
     return num + 100;
 })
-.then(num => {
-    return num > 100;
+.then((num) => {
+    console.log(num);
+    if(num > 100) {
+        throw new error(`error`)
+    }
 })
 .catch((error) => console.log(error))
 ```
@@ -94,13 +101,23 @@ let promise = new Promise((res, rej) => {
 - Use `.then` and log the value
 
 ```js
-ler promise = new Promise((res, rej) => {
-    res(`['A']`);
+let promise = new Promise((res, rej) => {
+    res(['A']);
 })
 .then((value) => {
-    return value
+    console.log(value);
+    return value.concat('B');
 })
-.then((res) => console.log(res));
+.then((value) => {
+    console.log(value);
+    return value.reduce((acc, cv, i) => {
+        acc[i] = cv;
+        return acc;
+    }, {});
+})
+.then((value) =>  {
+    console.log(value);
+});
 ```
 
 8. Do the following:
@@ -113,14 +130,19 @@ ler promise = new Promise((res, rej) => {
 ```js
 let first = new Promise((res, rej) => {
     res(1);
-})
-.then((2) => {
+});
+
+first
+.then((value) => {
+    console.log(value);
     return 2;
 })
-.then((3) => {
+.then((value) => {
+    console.log(value);
     return 3;
 })
-.then((4) => {
+.then((value) => {
+    console.log(value);
     return 4;
 })
 ```
@@ -135,14 +157,23 @@ let first = new Promise((res, rej) => {
 ```js
 let first = new Promise((res, rej) => {
     res(1);
-})
-.then((2) => {
+});
+
+first
+.then((value) => {
+    console.log(value);
     return 2;
-})
-.then((3) => {
+});
+
+first
+.then((value) => {
+    console.log(value);
     return 3;
-})
-.then((4) => {
+});
+
+first
+.then((value) => {
+    console.log(value);
     return 4;
 })
 ```
@@ -160,12 +191,14 @@ let first = new Promise((res, rej) => {
 let promise = new Promise((res, rej) => {
     res(`John`);
 })
-.then(() => {
+.then((value) => {
+    console.log(value);
     return new Promise((res, rej) => {
         res(`Arya`);
     })
 })
-.then(() => {
+.then((value) => {
+    console.log(value);
     return new Promise((res, rej) => {
         setTimeout(() => {
             res(`Bran`);
