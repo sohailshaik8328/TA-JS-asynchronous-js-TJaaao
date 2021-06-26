@@ -106,7 +106,7 @@ option {
 .card img {
     width: 500px;
 }
-.card_data p{
+.card_data .source{
     font-size: 1.8rem;
     background-color: teal;
     color: #ffffff;
