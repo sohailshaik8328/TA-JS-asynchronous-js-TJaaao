@@ -70,3 +70,4 @@ const three = new Promise((resolve, reject) =>
 let promiseSettled = Promise.allSettled(
     [one, two, three]
 )
+
