@@ -63,27 +63,27 @@ function displayOptionsUI(sources) {
 
 
 function init() {
-handleSpinner(true);
-data
-.then((res) => {
-    if(res.ok) {
-        return res.json();
-    } else {
-        throw new Error("response is not OK!")
-    } 
-})
-.then((result) => {
-    handleSpinner();
-    allNews = result;
-    displayUI(result);
-    let allSources = Array.from(new Set(result.map(n => n.newsSite)));
-    console.log(allSources);
-    displayOptionsUI(allSources);
-})
-.catch((error) => {
-    handleError(error);
-})
-.finally(() => handleSpinner());
+    handleSpinner(true);
+    data
+    .then((res) => {
+        if(res.ok) {
+            return res.json();
+        } else {
+            throw new Error("response is not OK!")
+        } 
+    })
+    .then((result) => {
+        handleSpinner();
+        allNews = result;
+        displayUI(result);
+        let allSources = Array.from(new Set(result.map(n => n.newsSite)));
+        console.log(allSources);
+        displayOptionsUI(allSources);
+    })
+    .catch((error) => {
+        handleError(error);
+    })
+    .finally(() => handleSpinner());
 }
 
 select.addEventListener('change', (event) => {
