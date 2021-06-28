@@ -1,6 +1,21 @@
-let ul = document.querySelector('ul');
-let select = document.querySelector('select');
-let allNews = [];
+(function () {
+    let ul = document.querySelector('ul');
+    let select = document.querySelector('select');
+    let errorMessage = document.querySelector('.error_message');
+    let main = document.querySelector('.main');
+    let allNews = [];
+
+function handleError(message = "Something went wrong!") {
+    main.style.display = "none";
+    errorMessage.style.display = "block";
+    errorMessage.innerText = message;
+}
+
+function handleSpinner(status = false) {
+    if(status) {
+        ul.innerHTML = `<div class="spinner center"><div class="donut"></div></div>`;
+    }
+}
 
 let data = fetch(`https://api.spaceflightnewsapi.net/v3/articles?_limit=30`);
 
@@ -47,9 +62,18 @@ function displayOptionsUI(sources) {
 }
 
 
+function init() {
+handleSpinner(true);
 data
-.then(res => res.json())
+.then((res) => {
+    if(res.ok) {
+        return res.json();
+    } else {
+        throw new Error("response is not OK!")
+    } 
+})
 .then((result) => {
+    handleSpinner();
     allNews = result;
     displayUI(result);
     let allSources = Array.from(new Set(result.map(n => n.newsSite)));
@@ -57,8 +81,10 @@ data
     displayOptionsUI(allSources);
 })
 .catch((error) => {
-    ul.innerText = error;
-});
+    handleError(error);
+})
+.finally(() => handleSpinner());
+}
 
 select.addEventListener('change', (event) => {
     let source = event.target.value.trim();
@@ -69,4 +95,12 @@ select.addEventListener('change', (event) => {
         filteredNews = allNews
     }
     displayUI(filteredNews); 
-})
+});
+
+
+if(navigator.onLine) {
+    init();
+} else {
+    handleError("Check your internet connection! ❌")
+}
+})();

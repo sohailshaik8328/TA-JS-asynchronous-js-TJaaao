@@ -131,3 +131,33 @@ option {
 .card_data {
     margin-left: 3rem;
 }
+/* Loading Animation */
+@keyframes donut-spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .donut {
+    display: inline-block;
+    border: 8px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #7983ff;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: donut-spin 1.2s linear infinite;
+  }
+  .spinner {
+      text-align: center;
+      height: 80vh;
+  }
+  .error_message {
+      font-size: 3rem;
+      color: crimson;
+      text-align: center;
+      margin-top: 10rem;
+      display: none;
+  }
